@@ -22,19 +22,23 @@ function reducer(state = initialState, action) {
         case BUY_ITEM:
             return {
                 ...state,
+                additionalPrice: state.additionalPrice + action.payload.price,
                 car: {
                     ...state.car,
-                    features: [...state.car.features, state.store.filter(item => item.id === action.payload)[0]]
+                    features: [...state.car.features, state.store.filter(item => item.id === action.payload.id)[0]]
                 }
             };
             case REM_ITEM:
                 return {
+
                     ...state,
+                    additionalPrice: state.additionalPrice - action.payload.price,
                     car: {
                         ...state.car,
-                        features: [...state.car.features.filter(item => item.id !== action.payload)]
+                        features: [...state.car.features.filter(item => item.id !== action.payload.id)]
                     }
                 };
+
         default:
             return state;
     }
