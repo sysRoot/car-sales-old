@@ -1,4 +1,4 @@
-import { BUY_ITEM } from "../actions/actionCreators";
+import { BUY_ITEM, REM_ITEM } from "../actions/actionCreators";
 
 const initialState = {
     additionalPrice: 0,
@@ -22,8 +22,19 @@ function reducer(state = initialState, action) {
         case BUY_ITEM:
             return {
                 ...state,
-                title: action.payload
+                car: {
+                    ...state.car,
+                    features: [...state.car.features, state.store.filter(item => item.id === action.payload)[0]]
+                }
             };
+            case REM_ITEM:
+                return {
+                    ...state,
+                    car: {
+                        ...state.car,
+                        features: [...state.car.features.filter(item => item.id !== action.payload)]
+                    }
+                };
         default:
             return state;
     }
